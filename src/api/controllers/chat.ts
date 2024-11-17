@@ -2,12 +2,15 @@ import { PassThrough } from "stream";
 import _ from "lodash";
 import AsyncLock from "async-lock";
 import axios, { AxiosResponse } from "axios";
+import dotenv from "dotenv";
 
 import APIException from "@/lib/exceptions/APIException.ts";
 import EX from "@/api/consts/exceptions.ts";
 import { createParser } from "eventsource-parser";
 import logger from "@/lib/logger.ts";
 import util from "@/lib/util.ts";
+
+dotenv.config();
 
 // 模型名称
 const MODEL_NAME = "deepseek-chat";
@@ -35,7 +38,13 @@ const FAKE_HEADERS = {
   "User-Agent":
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
   "X-App-Version": "20240126.0",
+  Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
 };
+
+if (!process.env.BEARER_TOKEN) {
+  throw new Error("BEARER_TOKEN environment variable is not set");
+}
+
 // access_token映射
 const accessTokenMap = new Map();
 // access_token请求队列映射

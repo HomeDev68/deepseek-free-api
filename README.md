@@ -82,6 +82,12 @@ https://udify.app/chat/IWOnEupdZcfCN0y7
 
 ![获取userToken](./doc/example-0.png)
 
+将`userToken`中的value值设置为环境变量`BEARER_TOKEN`，并在项目根目录下创建一个`.env`文件，内容如下：
+
+```
+BEARER_TOKEN=your_bearer_token_here
+```
+
 ### 多账号接入
 
 目前同个账号同时只能有*一路*输出，你可以通过提供多个账号的userToken value并使用`,`拼接提供：
